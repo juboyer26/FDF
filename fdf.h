@@ -20,6 +20,7 @@ typedef struct  s_env
 {
     void *mlx_ptr;
     void *win_ptr;
+    float map[3][3];
 }               t_env;
 
 typedef struct  s_pixel
@@ -27,6 +28,13 @@ typedef struct  s_pixel
     int x;
     int y;
 }               t_pixel;
+
+typedef struct  s_coord
+{
+    float x;
+    float y;
+    float z;
+}               t_coord;
 
 
 #endif // !_fdf_h_

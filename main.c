@@ -6,12 +6,28 @@
 /*   By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 15:48:02 by juboyer           #+#    #+#             */
-/*   Updated: 2019/07/09 16:23:46 by juboyer          ###   ########.fr       */
+/*   Updated: 2019/07/11 08:13:24 by juboyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
+int fun(t_env *env)
+{
+	int y = 0;
+	int x;
+	while (y < 3)
+	{
+		x = 0;
+		while (x < 3)
+		{
+			printf("%i, %i : %lf\n", y, x, env->map[y][x]);
+			x++;
+		}
+		y++;
+	}
+	return 0;
+}
 
 int my_key_funct(int keycode)
 {
@@ -35,6 +51,17 @@ int main(int argc, char **argv)
 
 	v.mlx_ptr = mlx_init();
 	v.win_ptr = mlx_new_window(v.mlx_ptr, 500, 500, "FDF");
+	v.map[0][0] = 0;
+	v.map[0][1] = 0;
+	v.map[0][2] = 0;
+
+	v.map[1][0] = 0;
+	v.map[1][1] = 1;
+	v.map[1][2] = 0;
+
+	v.map[2][0] = 0;
+	v.map[2][1] = 0;
+	v.map[2][2] = 0;
 	if (argc != 2)
 	{
 		printf("Invalid parameters\n");
@@ -43,7 +70,7 @@ int main(int argc, char **argv)
 	else
 	{
 		argv = NULL;
-		//mlx_loop_hook(v.mlx_ptr, fun, &env);
+		mlx_loop_hook(v.mlx_ptr, fun, &v);
 		mlx_key_hook(v.win_ptr, my_key_funct, 0);
     	mlx_hook(v.win_ptr, 17, 0L, exit_button, &v);
     	mlx_loop(v.mlx_ptr);
