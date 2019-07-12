@@ -1,6 +1,5 @@
 #include <mlx.h>
 #include <stdlib.h>
-# define PIXEL mlx_pixel_put(mlx, win, x, y, 0x0ffffff)
 # define ABS(X) (X < 0 ? -X : X) 
 
 typedef struct  s_pixel
