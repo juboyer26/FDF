@@ -18,9 +18,11 @@
 
 typedef struct  s_env
 {
-    void *mlx_ptr;
-    void *win_ptr;
-    float map[3][3];
+    void	*mlx_ptr;
+    void	*win_ptr;
+    float	**map;
+	int		height;
+	int		width;;
 }               t_env;
 
 typedef struct  s_pixel
@@ -35,6 +37,5 @@ typedef struct  s_coord
     float y;
     float z;
 }               t_coord;
-
 
 #endif // !_fdf_h_

@@ -108,7 +108,7 @@ int fun(void *data)
     return 0;
 }
 
-int exitfun(void *data)
+int exitfun(void)
 {
     exit(0);
     return 0;
