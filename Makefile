@@ -6,11 +6,11 @@
 #    By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/09 12:59:05 by juboyer           #+#    #+#              #
-#    Updated: 2019/07/09 16:29:05 by juboyer          ###   ########.fr        #
+#    Updated: 2019/07/14 13:32:26 by juboyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c
+SRC = src/main.c
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 

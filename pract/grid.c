@@ -1,4 +1,4 @@
-#incude "../fdf.h"
+#include "../includes/fdf.h"
 
 int		grid(int sizex, int sizey, int sizez)
 {
