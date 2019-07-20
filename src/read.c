@@ -5,77 +5,90 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 15:11:52 by juboyer           #+#    #+#             */
-/*   Updated: 2019/07/14 10:45:58 by juboyer          ###   ########.fr       */
+/*   Created: 2019/07/20 13:52:02 by juboyer           #+#    #+#             */
+/*   Updated: 2019/07/20 15:30:12 by juboyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include "fdf.h"
+#include "includes/fdf.h"
 
-int		count(const char *line)
+int			ft_col_row(t_env *mlx, char *line)
 {
-	int count;
-	int i;
-	int len;
-	char lastchar;
+	int		x;
+	char	**tab;
 
-	i = 0;
-	count = 0;
-	len = ft_strlen(line);
-	if (len > 0)
-		lastchar = line[0];
-	while (i <= len)
+	x = 0;
+	tab = ft_strsplit(line, ' ');
+	while (tab[x])
 	{
-		if (line[i] == ' ' || line[i] == '\0' && lastchar != ' ')
-			count++;
-		lastchar = line[i];
-		i++;
+		free(tab[x]);
+		x++;
 	}
-	return (count);
-}
-
-int		getinfo(char *pathname, int c)
-{
-	int fd;
-	int ret;
-	char *line;
-
-	ret = 0;
-	fd = open(pathname, O_RDONLY);
-	if (c == 1)
-	{
-		while (get_next_line(fd, &line) > 0)
-			ret++;
-		close (fd);
-	}
+	if (mlx->info.rows == 0)
+		mlx->info.cols = x;
 	else
 	{
-		get_next_line(fd, &line);
-		ret = count(line);
-		while (get_next_line(fd, &line) > 0)
-		{
-			if (count(line) != ret)
-				exit_error(1);
-		}
-		close (fd);
+		if (x != mlx->info.cols)
+			return (-1);
 	}
-	return (ret);
+	free(line);
+	free(tab);
+	mlx->info.rows++;
+	return (0);
 }
-
-void	p_args(char * filepath, t_env *env)
+int			malloc_rows_cols(t_env *mlx)
 {
-	int index;
+	char	*line;
+	int		ret;
 
-	index = 0;
-	env->height = getinfo(filepath, 1);
-	env->width = getinfo(filepath, 2);
-	env->map = (t_point **)malloc(sizeof(t_point) * env->width);
-	while (index < env->height)
+	line = NULL;
+	mlx->info.rows = 0;
+	mlx->info.cols = 0;
+	//ft_putendl("Check1 malloc func ");
+	while ((ret = get_next_line(mlx->fd, &line)) > 0)
 	{
-		env->map[index] = (t_point *)malloc(sizeof(t_point) *env->width);
-		index++;
+		//ft_putendl("Check2 11malloc func ");
+		if (ft_col_row(mlx, line) == -1)
+			return (-1);
+		//ft_putendl("Check2 12malloc func ");
 	}
+	//ft_putendl("Check2 malloc func ");
+	mlx->map = ft_memalloc(sizeof(t_pixel*) * mlx->info.rows);
+	close(mlx->fd);
+	mlx->fd = open(mlx->name, O_RDONLY);
+	//ft_putendl("Check3 malloc func ");
+	printf("%d",mlx->info.cols);
+	return (0);
 }
 
+int			read_map(t_env *mlx)
+{
+	char	*line;
+	char	**tab;
+	int		xytab[3];
 
+	xytab[1] = 0;
+	//ft_putendl("Check1");
+	if (malloc_rows_cols(mlx) == -1)
+		return (-1);
+	//ft_putendl("Check2");
+	while ((xytab[2] = get_next_line(mlx->fd, &line)) > 0)
+	{
+		xytab[0] = 0;
+		tab = ft_strsplit(line, ' ');
+		mlx->map[xytab[1]] = ft_memalloc(sizeof(t_pixel) * mlx->info.cols);
+		while (tab[xytab[0]] != NULL)
+		{
+			mlx->map[xytab[1]][xytab[0]].x = xytab[0];
+			mlx->map[xytab[1]][xytab[0]].y = xytab[1];
+			mlx->map[xytab[1]][xytab[0]].z = atoi(tab[xytab[0]]);
+			free(tab[xytab[0]]);
+			xytab[0]++;
+		}
+		free(tab);
+		free(line);
+		xytab[1]++;
+	}
+	//ft_putendl("Check3");
+	return ((xytab[2] == -1) ? -1 : 0);
+}

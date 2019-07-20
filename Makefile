@@ -6,11 +6,12 @@
 #    By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/09 12:59:05 by juboyer           #+#    #+#              #
-#    Updated: 2019/07/14 13:32:26 by juboyer          ###   ########.fr        #
+#    Updated: 2019/07/20 14:23:22 by juboyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = src/main.c
+SRC = src/main.c \
+	  src/read.c
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
@@ -26,13 +27,9 @@ $(NAME): $(OBJ)
 	@rm -f $(OBJ)
 
 LIBFT:
-	git submodule init libft
-	git submodule update libft
 	make -C libft
 
 get_next_line:
-	git submodule init get_next_line
-	git submodule update get_next_line
 	gcc -c $(FLAGS) get_next_line/get_next_line.c -o get_next_line/get_next_line.o
 
 %.o: %.c
