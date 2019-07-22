@@ -6,12 +6,18 @@
 #    By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/09 12:59:05 by juboyer           #+#    #+#              #
-#    Updated: 2019/07/20 14:23:22 by juboyer          ###   ########.fr        #
+#    Updated: 2019/07/21 14:20:27 by juboyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = src/main.c \
-	  src/read.c
+SRC = src/main.c\
+	  src/read.c \
+	  src/image.c \
+	  src/render.c \
+	  src/util.c	\
+	  src/brens_tools.c\
+	  src/cal_functions.c \
+	  
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 

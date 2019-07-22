@@ -6,7 +6,7 @@
 /*   By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 15:48:02 by juboyer           #+#    #+#             */
-/*   Updated: 2019/07/20 15:39:07 by juboyer          ###   ########.fr       */
+/*   Updated: 2019/07/21 14:35:14 by juboyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	init_mlx(t_env *mlx)
 	mlx->info.check = 0;
 	mlx->mlx_ptr = mlx_init();
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, W_W, W_H, "Fdf");
-	//mlx->image = init_img(mlx);
+	mlx->image = init_img(mlx);
 	mlx->anglex = 0;
 	mlx->angley = 0;
-	mlx->scale = 4;
-	mlx->depth = 1;
+	mlx->scale = 8;
+	mlx->depth = -1;
 	mlx->move_lr = 1;
 	mlx->move_ud = 1;
-	mlx->depth_max = 2;
-	mlx->depth_min = -2;
+	mlx->depth_max = -2;
+	mlx->depth_min = 2;
 	mlx_key_hook(mlx->win_ptr, my_key_funct, mlx);
-	//mlx_expose_hook(mlx->win, expose_hook, mlx);
+	mlx_expose_hook(mlx->win_ptr, expose_hook, mlx);
 	//mlx_hook(mlx->win, MOUSE_DOWN, 0, &mouse_down, mlx);
 	//mlx_hook(mlx->win, MOUSE_MOVE, 0, &ft_rotate_map, mlx);
 	mlx_loop(mlx->mlx_ptr);
