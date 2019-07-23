@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/07/09 12:59:05 by juboyer           #+#    #+#              #
-#    Updated: 2019/07/21 14:20:27 by juboyer          ###   ########.fr        #
+#    Created: 2019/07/23 07:26:13 by juboyer           #+#    #+#              #
+#    Updated: 2019/07/23 07:42:29 by juboyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,29 +17,33 @@ SRC = src/main.c\
 	  src/util.c	\
 	  src/brens_tools.c\
 	  src/cal_functions.c \
-	  
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
 NAME = fdf
 
-FLAGS = -Wextra -Werror -Wall -I libft -I get_next_line -I  .
+HEADERS = fdf.h
+
+FLAGS = -Wextra -Werror -Wall -I libft -I get_next_line -I .
 
 all: LIBFT get_next_line $(NAME)
 
 $(NAME): $(OBJ)
 	gcc $(FLAGS) -o $(NAME) $(OBJ) libft/libft.a get_next_line/get_next_line.o -lmlx -framework OpenGL -framework AppKit
 	@echo "Compilation of fdf:	\033[1;32mOK\033[m"
-	@rm -f $(OBJ)
 
 LIBFT:
+	git submodule init libft
+	git submodule update libft
 	make -C libft
 
 get_next_line:
+	git submodule init get_next_line
+	git submodule update get_next_line
 	gcc -c $(FLAGS) get_next_line/get_next_line.c -o get_next_line/get_next_line.o
 
-%.o: %.c
-	gcc -c $(FLAGS) -o $@ $<
+%.o: %.c $(HEADERS)
+	gcc -g -c $(FLAGS) -o $@ $<
 
 clean:
 	rm -f $(OBJ)
@@ -50,4 +54,12 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: LIBFT re fclean clean get_next_line all
+updateSubmodules:
+	make fclean
+	git submodule foreach git checkout master
+	git submodule foreach git pull origin master
+	git add .
+	git commit -m "submodule update"
+	git push
+
+.PHONY: LIBFT re fclean clean get_next_line all updateSubmodules

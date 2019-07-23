@@ -6,11 +6,11 @@
 /*   By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 13:52:02 by juboyer           #+#    #+#             */
-/*   Updated: 2019/07/21 13:50:23 by juboyer          ###   ########.fr       */
+/*   Updated: 2019/07/23 07:41:13 by juboyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/fdf.h"
+#include "../includes/fdf.h"
 
 int			ft_col_row(t_env *mlx, char *line)
 {
