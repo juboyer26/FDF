@@ -6,17 +6,19 @@
 #    By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/23 07:26:13 by juboyer           #+#    #+#              #
-#    Updated: 2019/07/23 07:42:29 by juboyer          ###   ########.fr        #
+#    Updated: 2019/07/27 13:51:31 by juboyer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = src/main.c\
-	  src/read.c \
-	  src/image.c \
-	  src/render.c \
-	  src/util.c	\
-	  src/brens_tools.c\
-	  src/cal_functions.c \
+SRC = src/main.c   \
+	  src/read.c    \
+	  src/image.c    \
+	  src/render.c    \
+	  src/util.c	   \
+	  src/brens_tools.c \
+	  src/cal_functions.c\
+	  src/mouse.c         \
+	  src/keyboard.c 	   \
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
@@ -50,6 +52,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f get_next_line/*.o
 	make -C libft fclean
 
 re: fclean all

@@ -6,16 +6,26 @@
 /*   By: juboyer <juboyer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 15:48:02 by juboyer           #+#    #+#             */
-/*   Updated: 2019/07/21 14:35:14 by juboyer          ###   ########.fr       */
+/*   Updated: 2019/07/27 13:44:24 by juboyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../includes/fdf.h"
-int my_key_funct(int keycode)
+int my_key_funct(int keycode, t_env *mlx)
 {
 	if (keycode == 53)
 		exit(0);
+	ft_depth(keycode, mlx);
+	ft_scale(keycode, mlx);
+	ft_xy_trans(keycode, mlx);
 	return (0);
+}
+
+void	erase(t_env *mlx)
+{
+	clear_image(mlx);
+	expose_hook(mlx);
 }
 
 void	init_mlx(t_env *mlx)
@@ -34,8 +44,8 @@ void	init_mlx(t_env *mlx)
 	mlx->depth_min = 2;
 	mlx_key_hook(mlx->win_ptr, my_key_funct, mlx);
 	mlx_expose_hook(mlx->win_ptr, expose_hook, mlx);
-	//mlx_hook(mlx->win, MOUSE_DOWN, 0, &mouse_down, mlx);
-	//mlx_hook(mlx->win, MOUSE_MOVE, 0, &ft_rotate_map, mlx);
+	mlx_hook(mlx->win_ptr, MOUSE_DOWN, 0, &mouse_down, mlx);
+	mlx_hook(mlx->win_ptr, MOUSE_MOVE, 0, &ft_rotate_map, mlx);
 	mlx_loop(mlx->mlx_ptr);
 }
 
@@ -43,12 +53,13 @@ void	init(t_env *mlx)
 {
 	if (read_map(mlx) == -1)
 	{
-		ft_putendl("ERROR 404 JUSTINE MESSED UP");
+		ft_putendl("MAP ERROR");
 		return ;
 	}
 	else
-		ft_putendl("GG JUSTINE");
-	init_mlx(mlx);
+	{
+		init_mlx(mlx);
+	}
 }
 
 int	exit_button(void)
@@ -61,8 +72,6 @@ int main(int argc, char **argv)
 {
 	t_env v;
 
-	// v.mlx_ptr = mlx_init();
-	// v.win_ptr = mlx_new_window(v.mlx_ptr, 500, 500, "FDF");
 	if (argc != 2)
 	{
 		printf("Invalid parameters\n");
@@ -73,9 +82,6 @@ int main(int argc, char **argv)
 		v.name = argv[1];
 		v.fd = v.fd = open(v.name, O_RDONLY);
 		init(&v);
-		// mlx_key_hook(v.win_ptr, my_key_funct, 0);
-		// mlx_hook(v.win_ptr, 17, 0L, exit_button, &v);
-		// mlx_loop(v.mlx_ptr);
 	}
 	return (0);
 }

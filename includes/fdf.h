@@ -13,7 +13,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-
+#define MOUSE_DOWN 4
+#define MOUSE_UP 5
+#define MOUSE_MOVE 6
 #define W_H 800
 #define W_W 1280
 #define KEY_ESC 53
@@ -140,4 +142,12 @@ int			expose_hook(t_env *mlx);
 void		calcule_coord(t_env *mlx);
 void		rotate(t_env *mlx, t_rot_point *rp);
 void		ft_calculate(t_env *mlx, t_pixel *pt);
+int			mouse_down(int button, int x, int y, t_env *mlx);
+
+int			ft_rotate_map(int x, int y, t_env *mlx);
+int			mouse_down(int button, int x, int y, t_env *mlx);
+void		erase(t_env *mlx);
+void		ft_scale(int key, t_env *mlx);
+void		ft_xy_trans(int key, t_env *mlx);
+void		ft_depth(int key, t_env *mlx);
 #endif // !_fdf_h_
